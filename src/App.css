@@ -1,0 +1,29 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+  background-color: antiquewhite;
+}
+
+.btn-hide{
+  background-color: red;
+  color: white;
+}
+.btn-show{
+  background-color: green;
+  color: white;
+}
+
+ul{
+
+  text-align: left;
+  list-style-type: none;
+  text-decoration: none;
+  padding: 0;
+}
+
+p{
+
+}
+
