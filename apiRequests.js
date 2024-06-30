@@ -1,24 +1,25 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 const gemeniKey = import.meta.env.VITE_API_KEY;
-
 const genAI = new GoogleGenerativeAI(gemeniKey);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 async function run(job, language) {
-  const questionPrompt = `Generate a random technical interview question. The question should be relevant to ${job} and ${language} and can be a coding challenge or concpetual. Do not provide answers. And format it appropraitely in HTML tags as this is be inserted somewhere in my web application code and dont include "html" and the three quotes at the beginneing  because they are being rendered as well.`;
+  const questionPrompt = `Generate a random technical interview question. The question should be relevant to ${job} and ${language} and can be a coding challenge or conceptual. Format the question appropriately using HTML tags.`;
 
   const answerPrompt = (question) =>
-    `Based on ${question}, provide the answer to the question. Ensure the answer is correct and detailed. And format it appropraitely in HTML tags as this is be inserted somewhere in my web application code and dont include "html" and the three quotes at the beginneing  because they are being rendered as well.`;
+    `Based on the following question, provide a correct and detailed answer. Format the answer appropriately using HTML tags: ${question}`;
 
   const altAnswerPrompt = (question, answer) =>
-    `Based on ${question} and ${answer}, generate an easier alternative answer. Provide a simplified version of the answer for better understanding.  And format it appropraitely in HTML tags as this is be inserted somewhere in my web application code and dont include "html" and the three quotes at the beginneing  because they are being rendered as well.`;
+    `Based on the following question and answer, generate a simpler alternative answer for better understanding. Format the answer appropriately using HTML tags: 
+    Question: ${question}
+    Answer: ${answer}`;
 
   const sideQuestionsPrompt = (question) =>
-    `Based on ${question}, list side questions that can be asked by the interviewer. Include related questions that can help gauge the candidate's depth of knowledge.  And format it appropraitely in HTML tags as this is be inserted somewhere in my web application code and dont include "html" and the three quotes at the beginneing  because they are being rendered as well.`;
+    `Based on the following question, list related side questions that can help gauge the candidate's depth of knowledge. Format the side questions appropriately using HTML tags: ${question}`;
 
   const answersSideQuestionsPrompt = (sideQuestions) =>
-    `Based on ${sideQuestions}, provide answers to each question. And format it appropraitely in HTML tags as this is be inserted somewhere in my web application code and dont include "html" and the three quotes at the beginneing  because they are being rendered as well.`;
+    `Based on the following side questions, provide detailed answers to each. Format the answers appropriately using HTML tags: ${sideQuestions}`;
 
   const question = await (
     await model.generateContent(questionPrompt)
